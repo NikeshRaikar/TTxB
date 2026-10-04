@@ -3,7 +3,7 @@
 [![Platform: Raspberry Pi 5](https://img.shields.io/badge/Platform-Raspberry%20Pi%205-c51a4a?style=flat-square&logo=raspberry-pi)](#)
 [![OS: Debian / Linux](https://img.shields.io/badge/OS-Linux%20%2F%20Debian-a81d33?style=flat-square&logo=linux)](#)
 [![Language: Python](https://img.shields.io/badge/Language-Python-3776AB?style=flat-square&logo=python)](#)
-[![Build: TTxB-v1.0](https://img.shields.io/badge/Build-TTxB--v1.0-brightgreen?style=flat-square)](#)
+[![Build: TTxB-v1.0](https://img.shields.io/badge/Build-ceT--logger--v1.0-brightgreen?style=flat-square)](#)
 
 TTxB is a robust, lightweight, and automated vehicle network traffic logging suite. Distributed as a custom Debian package (`TTxB-v1.0`), this tool transforms a Raspberry Pi 5 into a fully autonomous logging device capable of capturing multi-protocol automotive data streams seamlessly in the background.
 
@@ -14,30 +14,29 @@ TTxB is a robust, lightweight, and automated vehicle network traffic logging sui
 *   **Autonomous Background Execution:** Fully managed by custom Linux `systemd` background services, ensuring logging initiates automatically upon vehicle startup/boot without requiring user intervention.
 *   **Turnkey Deployment:** Packaged into a standard Debian installer (`.deb`), handling file structure placement, dependency management, and service initialization in a single command.
 
-## 🛠 Hardware & Software Requirements
+---
 
-### Hardware
-*   **Raspberry Pi 5** (Recommended for optimal I/O bandwidth and processing performance)
-*   **Dual-Channel CAN HAT** 
-*   MicroSD card with Raspberry Pi OS (Debian-based)
+## 🏗️ Hardware Architecture & Flow
 
-### Software Ecosystem
-*   Python 3.x
-*   `python-can` library
-*   `systemd` (for daemon management)
-*   `dpkg` / `apt` (for installation)
+The following diagram illustrates how the TTxB hardware components interface with the vehicle network and process incoming data. 
 
-## 📦 Installation
+```mermaid
+graph TD
+    classDef hardware fill:#2C3E50,stroke:#34495E,stroke-width:2px,color:#fff;
+    classDef software fill:#2980B9,stroke:#2980B9,stroke-width:2px,color:#fff;
+    classDef vehicle fill:#C0392B,stroke:#C0392B,stroke-width:2px,color:#fff;
 
-Deployment is streamlined through the pre-compiled `ceT-logger-v1.0` package, which automatically unpacks the required folder structure and control files.
+    V[Vehicle OBD-II / Gateway]:::vehicle
 
-```bash
-# Clone the repository (if accessing source files)
-git clone [https://github.com/NikeshRaikar/TTxB.git](https://github.com/NikeshRaikar/TTxB.git)
-cd TTxB
+    subgraph Hardware Layer
+        V -- CAN 0 / CAN 1 --> CH[Dual-Channel CAN HAT]:::hardware
+        V -- Automotive Ethernet --> ETH[Ethernet Interface]:::hardware
+        CH -- SPI Interface --> RPI[Raspberry Pi 5]:::hardware
+        ETH --> RPI
+    end
 
-# Install the custom Debian package
-sudo dpkg -i ceT-logger-v1.0.deb
-
-# Resolve any potential missing system dependencies
-sudo apt-get install -f
+    subgraph Software Layer (ceT-logger-v1.0)
+        RPI --> S[systemd Service]:::software
+        S --> P[Python Logging Daemon]:::software
+        P --> DB[(/var/log/TTxB Storage)]:::software
+    end
