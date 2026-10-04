@@ -1,0 +1,29 @@
+[Unit]
+Description=CAN Bus Logger (can0 and can1)
+Requires=logger-network.service
+After=network.target
+
+[Service]
+Type=simple
+# Reset interfaces and set bitrate
+ExecStartPre=-/sbin/ip link set can0 down
+ExecStartPre=-/sbin/ip link set can1 down
+ExecStartPre=-/sbin/ip link set can0 type can bitrate 500000
+ExecStartPre=-/sbin/ip link set can1 type can bitrate 500000
+ExecStartPre=-/sbin/ip link set can0 up
+ExecStartPre=-/sbin/ip link set can1 up
+
+ExecStartPre=/bin/sh -c 'sudo mkdir -p  /data/can_logs'
+ExecStartPre=/bin/sh -c 'sudo chown "$USER:$USER" /data/can_logs'
+
+# Start candump logging all interfaces (-l any) in the log directory
+ExecStart=/bin/sh -c 'cd /data/can_logs && exec /usr/bin/candump -l any'
+
+
+ExecStopPost=-/sbin/ip link set can0 down
+ExecStopPost=-/sbin/ip link set can1 down
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

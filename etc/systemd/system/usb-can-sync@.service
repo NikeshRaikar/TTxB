@@ -1,0 +1,8 @@
+[Unit]
+Description=Move CAN logs to USB on %I
+BindsTo=dev-%i.device
+After=dev-%i.device
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/usb_can_sync.sh %I

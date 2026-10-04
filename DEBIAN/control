@@ -1,0 +1,7 @@
+Package: ceT-logger-v1.0
+Version: 1.0.0
+Section: utils
+Priority: optional
+Architecture: arm64
+Maintainer: Nikesh Jagadeesh Rakar 
+Description: Automated CAN and Ethernet logging system

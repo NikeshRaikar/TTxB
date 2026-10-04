@@ -1,0 +1,11 @@
+[Unit]
+Description=Initialize CAN and Ethernet Bridge interfaces
+After=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/init-networks.sh
+
+[Install]
+WantedBy=multi-user.target

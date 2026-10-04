@@ -1,0 +1,16 @@
+[Unit]
+Description=Automotive Ethernet Ring Buffer Logger
+Requires=logger-network.service
+After=network.target
+
+[Service]
+Type=simple
+ExecStartPre=-/sbin/ip link set br0 down
+ExecStartPre=-/sbin/ip link set br0  up
+
+ExecStart=/usr/local/bin/ecu_logger.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
