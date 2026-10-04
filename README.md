@@ -3,7 +3,7 @@
 [![Platform: Raspberry Pi 5](https://img.shields.io/badge/Platform-Raspberry%20Pi%205-c51a4a?style=flat-square&logo=raspberry-pi)](#)
 [![OS: Debian / Linux](https://img.shields.io/badge/OS-Linux%20%2F%20Debian-a81d33?style=flat-square&logo=linux)](#)
 [![Language: Python](https://img.shields.io/badge/Language-Python-3776AB?style=flat-square&logo=python)](#)
-[![Build: TTxB-v1.0](https://img.shields.io/badge/Build-ceT--logger--v1.0-brightgreen?style=flat-square)](#)
+[![Build: TTxB-v1.0](https://img.shields.io/badge/Build-TTxB--v1.0-brightgreen?style=flat-square)](#)
 
 TTxB is a robust, lightweight, and automated vehicle network traffic logging suite. Distributed as a custom Debian package (`TTxB-v1.0`), this tool transforms a Raspberry Pi 5 into a fully autonomous logging device capable of capturing multi-protocol automotive data streams seamlessly in the background.
 
@@ -29,13 +29,13 @@ graph TD
     V[Vehicle OBD-II / Gateway]:::vehicle
 
     subgraph Hardware Layer
-        V -- CAN 0 / CAN 1 --> CH[Dual-Channel CAN HAT]:::hardware
-        V -- Automotive Ethernet --> ETH[Ethernet Interface]:::hardware
-        CH -- SPI Interface --> RPI[Raspberry Pi 5]:::hardware
+        V -- CAN 0 / CAN 1 --> CH[https://github.com/NikeshRaikar/TTxB/blob/main/CAN_HAT_RASPBERYPI.jpeg]:::hardware
+        V -- Automotive Ethernet --> ETH[https://github.com/NikeshRaikar/TTxB/blob/main/ADAPTER.jpeg]:::hardware
+        CH -- SPI Interface --> RPI[https://github.com/NikeshRaikar/TTxB/blob/main/licensed-image.jpeg]:::hardware
         ETH --> RPI
     end
 
-    subgraph Software Layer (ceT-logger-v1.0)
+    subgraph Software Layer (TTxB-v1.0)
         RPI --> S[systemd Service]:::software
         S --> P[Python Logging Daemon]:::software
         P --> DB[(/var/log/TTxB Storage)]:::software
