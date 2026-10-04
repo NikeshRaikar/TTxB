@@ -29,7 +29,7 @@ graph TD
     V[Vehicle OBD-II / Gateway]:::vehicle
 
     subgraph Hardware Layer
-        V -- CAN 0 / CAN 1 --> CH[https://github.com/NikeshRaikar/TTxB/blob/main/CAN_HAT_RASPBERYPI.jpeg]:::hardware
+        V -- CAN 0 / CAN 1 --> CH[<img src="CAN_HAT_RASPBERYPI.jpeg" alt="Raspberry Pi 5 Setup" width="600">]:::hardware
         V -- Automotive Ethernet --> ETH[https://github.com/NikeshRaikar/TTxB/blob/main/ADAPTER.jpeg]:::hardware
         CH -- SPI Interface --> RPI[https://github.com/NikeshRaikar/TTxB/blob/main/licensed-image.jpeg]:::hardware
         ETH --> RPI
