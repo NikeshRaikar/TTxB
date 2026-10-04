@@ -35,7 +35,7 @@ graph TD
         ETH --> RPI
     end
 
-    subgraph Software Layer (TTxB-v1.0)
+    subgraph Software Layer ["Software Layer (TTxB-v1.0)"] 
         RPI --> S[systemd Service]:::software
         S --> P[Python Logging Daemon]:::software
         P --> DB[(/var/log/TTxB Storage)]:::software
